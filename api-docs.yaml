@@ -1,0 +1,120 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/v1/public/user:
+    post:
+      tags:
+      - public-user-controller
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserDto'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /api/v1/public/token/refresh:
+    post:
+      tags:
+      - token-controller
+      operationId: refresh
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RefreshTokenDto'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TokenResponseDto'
+  /api/v1/public/token/generate:
+    post:
+      tags:
+      - token-controller
+      operationId: generate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRequestDto'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/TokenResponseDto'
+  /user:
+    get:
+      tags:
+      - user-controller
+      operationId: get
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /admin:
+    get:
+      tags:
+      - admin-controller
+      operationId: get_1
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+components:
+  schemas:
+    UserDto:
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        roles:
+          type: array
+          items:
+            type: string
+    RefreshTokenDto:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+    TokenResponseDto:
+      type: object
+      properties:
+        token:
+          type: string
+        refreshToken:
+          type: string
+    TokenRequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+        password:
+          type: string
